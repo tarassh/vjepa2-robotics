@@ -61,6 +61,11 @@ vjepa2/checkpoints/
 *.log
 logs/
 
+# Profiling outputs
+vjepa2_profile.txt
+vjepa2_profile.json
+*.prof
+
 # Data
 data/
 datasets/
