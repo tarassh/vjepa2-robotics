@@ -73,12 +73,17 @@ class ObstacleDetector:
         # Try to load PyTorch Hub weights if available
         try:
             if model_size == 'giant':
-                model = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_giant')
+                model_dump = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_giant')
             elif model_size == 'huge':
-                model = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_huge')
+                model_dump = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_huge')
             elif model_size == 'large':
-                model = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_large')
+                model_dump = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_large')
             print("Loaded pretrained weights from PyTorch Hub")
+            # Extract model object from tuple if necessary
+            if isinstance(model_dump, tuple):
+                model = model_dump[0]
+            else:
+                model = model_dump
         except Exception as e:
             print(f"Could not load pretrained weights from PyTorch Hub: {e}")
             print("Using randomly initialized weights - for best results, download pretrained checkpoints")
