@@ -13,8 +13,9 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-# Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent))
+# Add vjepa2 submodule to path for imports
+vjepa2_path = Path(__file__).parent / 'vjepa2'
+sys.path.insert(0, str(vjepa2_path))
 
 from src.models.attentive_pooler import AttentiveClassifier
 from src.models.vision_transformer import vit_giant_xformers_rope, vit_huge_xformers_rope, vit_large_xformers_rope

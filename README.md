@@ -31,22 +31,24 @@ This repository provides plug-and-play obstacle detection and collision avoidanc
 ### Setup
 
 ```bash
-# Clone this repository
-git clone https://github.com/tarassh/vjepa2-robotics.git
+# Clone this repository with submodules
+git clone --recurse-submodules https://github.com/tarassh/vjepa2-robotics.git
 cd vjepa2-robotics
+
+# If you already cloned without --recurse-submodules:
+# git submodule update --init --recursive
 
 # Create conda environment
 conda create -n vjepa2-robotics python=3.12
 conda activate vjepa2-robotics
 
-# Install V-JEPA 2
-git clone https://github.com/facebookresearch/vjepa2.git
+# Install V-JEPA 2 dependencies
 cd vjepa2
 pip install -e .
 cd ..
 
-# Install additional dependencies
-pip install opencv-python
+# Install robotics dependencies
+pip install -r requirements.txt
 ```
 
 ### Download Pretrained Models (Optional but Recommended)

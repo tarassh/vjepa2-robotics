@@ -30,6 +30,7 @@ env/
 *.pt
 checkpoints/
 *.ckpt
+vjepa2/checkpoints/
 
 # Jupyter
 .ipynb_checkpoints

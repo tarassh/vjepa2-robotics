@@ -13,7 +13,9 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-sys.path.insert(0, str(Path(__file__).parent))
+# Add vjepa2 submodule to path for imports
+vjepa2_path = Path(__file__).parent / 'vjepa2'
+sys.path.insert(0, str(vjepa2_path))
 
 from src.models.vision_transformer import vit_giant_xformers_rope
 from src.models.ac_predictor import vit_ac_predictor
