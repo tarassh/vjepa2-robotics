@@ -18,7 +18,7 @@ vjepa2_path = Path(__file__).parent / 'vjepa2'
 sys.path.insert(0, str(vjepa2_path))
 
 from src.models.attentive_pooler import AttentiveClassifier
-from src.models.vision_transformer import vit_giant_xformers_rope, vit_huge_xformers_rope, vit_large_xformers_rope
+from src.models.vision_transformer import vit_giant_xformers_rope, vit_huge_rope, vit_large_rope
 import src.datasets.utils.video.transforms as video_transforms
 import src.datasets.utils.video.volume_transforms as volume_transforms
 
@@ -62,9 +62,9 @@ class ObstacleDetector:
     def _load_model(self, model_size, img_size):
         """Load pretrained V-JEPA 2 model"""
         if model_size == 'large':
-            model = vit_large_xformers_rope(img_size=(img_size, img_size), num_frames=self.num_frames)
+            model = vit_large_rope(img_size=(img_size, img_size), num_frames=self.num_frames)
         elif model_size == 'huge':
-            model = vit_huge_xformers_rope(img_size=(img_size, img_size), num_frames=self.num_frames)
+            model = vit_huge_rope(img_size=(img_size, img_size), num_frames=self.num_frames)
         elif model_size == 'giant':
             model = vit_giant_xformers_rope(img_size=(img_size, img_size), num_frames=self.num_frames)
         else:
