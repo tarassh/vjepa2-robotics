@@ -41,7 +41,15 @@ class CollisionAvoidancePlanner:
             num_frames: Number of frames to process
             device: 'cuda' or 'cpu'
         """
-        self.device = device if torch.cuda.is_available() else 'cpu'
+        # Handle device selection (cuda, mps, or cpu)
+        if device == 'cuda' and not torch.cuda.is_available():
+            print("Warning: CUDA not available, falling back to CPU")
+            self.device = 'cpu'
+        elif device == 'mps' and not torch.backends.mps.is_available():
+            print("Warning: MPS not available, falling back to CPU")
+            self.device = 'cpu'
+        else:
+            self.device = device
         self.img_size = img_size
         self.num_frames = num_frames
         self.tokens_per_frame = int((img_size // 16) ** 2)  # patch_size=16

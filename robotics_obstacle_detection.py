@@ -69,34 +69,39 @@ class ObstacleDetector:
     
     def _load_model(self, model_size, img_size):
         """Load pretrained V-JEPA 2 model"""
-        if model_size == 'large':
-            model = vit_large_rope(img_size=(img_size, img_size), num_frames=self.num_frames)
-        elif model_size == 'huge':
-            model = vit_huge_rope(img_size=(img_size, img_size), num_frames=self.num_frames)
-        elif model_size == 'giant':
-            model = vit_giant_xformers_rope(img_size=(img_size, img_size), num_frames=self.num_frames)
-        else:
-            raise ValueError(f"Unknown model size: {model_size}")
-        
-        # Try to load PyTorch Hub weights if available
+        # Try to load pretrained model from PyTorch Hub first
         try:
             if model_size == 'giant':
-                model_dump = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_giant')
+                model = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_giant')
             elif model_size == 'huge':
-                model_dump = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_huge')
+                model = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_huge')
             elif model_size == 'large':
-                model_dump = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_large')
-            print("Loaded pretrained weights from PyTorch Hub")
-            # Extract model object from tuple if necessary
-            if isinstance(model_dump, tuple):
-                model = model_dump[0]
+                model = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_large')
             else:
-                model = model_dump
+                raise ValueError(f"Unknown model size: {model_size}")
+            
+            # Extract model from tuple if necessary
+            if isinstance(model, tuple):
+                model = model[0]
+            
+            print("Loaded pretrained weights from PyTorch Hub")
+            return model
+            
         except Exception as e:
-            print(f"Could not load pretrained weights from PyTorch Hub: {e}")
-            print("Using randomly initialized weights - for best results, download pretrained checkpoints")
-        
-        return model
+            # Fallback: create model with random initialization
+            print(f"Could not load from PyTorch Hub: {e}")
+            print("Creating model with random initialization - for best results, download pretrained checkpoints")
+            
+            if model_size == 'large':
+                model = vit_large_rope(img_size=(img_size, img_size), num_frames=self.num_frames)
+            elif model_size == 'huge':
+                model = vit_huge_rope(img_size=(img_size, img_size), num_frames=self.num_frames)
+            elif model_size == 'giant':
+                model = vit_giant_xformers_rope(img_size=(img_size, img_size), num_frames=self.num_frames)
+            else:
+                raise ValueError(f"Unknown model size: {model_size}")
+            
+            return model
     
     def _build_transform(self, img_size):
         """Build video preprocessing transform"""
