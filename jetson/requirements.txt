@@ -1,0 +1,11 @@
+# Jetson Orin Nano requirements
+# PyTorch 2.8.0 must be installed from NVIDIA's Jetson index:
+#   pip install torch==2.8.0 torchvision==0.23.0 \
+#     --index-url https://developer.download.nvidia.com/compute/redist/jp/v61/pytorch/
+
+transformers>=5.0.0
+timm>=1.0.24
+einops>=0.8.0
+numpy>=1.26.0,<2.0
+safetensors
+huggingface-hub

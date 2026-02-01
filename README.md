@@ -11,8 +11,9 @@ This repository provides plug-and-play obstacle detection and collision avoidanc
 - 🎥 **Live Camera Processing** - Real-time video analysis from laptop/robot cameras
 - 🚨 **Obstacle Detection** - Motion-based detection with spatial attention maps
 - 🤖 **Collision Avoidance** - Action-conditioned planning for safe navigation
-- ⚡ **GPU Accelerated** - Fast inference on CUDA-enabled devices
+- ⚡ **GPU Accelerated** - Fast inference on CUDA, MPS, and **Jetson edge devices**
 - 🔧 **Easy Integration** - Simple APIs for ROS and custom robotics systems
+- 🧠 **Edge Deployment** - Runs on Jetson Orin Nano 8GB at ~4 FPS (see [jetson/](jetson/))
 
 ## Demo
 
@@ -221,6 +222,8 @@ See [ROBOTICS_README.md](ROBOTICS_README.md) for detailed integration examples.
 
 ## Performance
 
+### Desktop GPU
+
 | Model | Params | FPS (GPU) | FPS (CPU) | Accuracy |
 |-------|--------|-----------|-----------|----------|
 | ViT-Large | 300M | ~30 | ~2 | Good |
@@ -228,6 +231,16 @@ See [ROBOTICS_README.md](ROBOTICS_README.md) for detailed integration examples.
 | ViT-Giant | 1B | ~15 | ~0.5 | Best |
 
 *Tested on NVIDIA RTX 4090 and Apple M2 Pro*
+
+### Jetson Orin Nano (8GB, FP16)
+
+| Frames | Resolution | Latency | FPS |
+|--------|-----------|---------|-----|
+| 8 | 224×224 | 242ms | 4.1 |
+| 16 | 256×256 | 452ms | 2.2 |
+| 4 | 224×224 | 214ms | 4.7 |
+
+See [jetson/README.md](jetson/README.md) for full benchmarks and setup guide.
 
 ## Customization
 
